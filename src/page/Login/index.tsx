@@ -3,13 +3,16 @@ import {
   Avatar,
   CssBaseline,
   Container,
-  Grid,
   Typography,
   TextField,
   Button,
   makeStyles,
 } from "@material-ui/core";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+
+type LoginProps = {
+  setUserInfo: React.Dispatch<React.SetStateAction<string>>;
+};
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,9 +34,9 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Login() {
+function Login(props: LoginProps) {
   const classes = useStyles();
-
+  const { setUserInfo } = props;
   const [id, setId] = useState("");
   const [pw, setPw] = useState("");
 
@@ -84,6 +87,7 @@ function Login() {
             className={classes.submit}
             onClick={(e) => {
               e.preventDefault();
+              setUserInfo("user");
             }}
           >
             Sign In
