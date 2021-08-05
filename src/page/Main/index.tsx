@@ -4,6 +4,7 @@ function Main() {
   return (
     <div>
       <Header />
+      Main page
     </div>
   );
 }
