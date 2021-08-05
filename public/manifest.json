@@ -11,6 +11,5 @@
     "default_icon": "logo192.png",
     "default_title": "Core-Chrome-Extension",
     "default_popup": "index.html"
-  },
-  "content_security_policy": "script-src 'self' 'sha256-Wv5m/Q3miHO+JXo/oDjuOJbLfI9bUywVwgsiA5rKx/c='; object-src 'self'"
+  }
 }
