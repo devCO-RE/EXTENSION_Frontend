@@ -1,5 +1,4 @@
 const test = () => {
-    alert("!!!!")
     var queryInfo = {
 
         active: true,
@@ -13,6 +12,7 @@ const test = () => {
         var url = tab.url;
     
         alert(url);
+        alert(tab);
     
       });
     

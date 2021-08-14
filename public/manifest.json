@@ -7,7 +7,7 @@
   "icons": {
     "192": "logo192.png"
   },
-  "permissions": ["activeTab", "", "tabs"],
+  "permissions": ["activeTab", "tabs"],
   "background": {
     "scripts": ["background.js"],
     "persistent": true
