@@ -1,8 +1,4 @@
 
 
-import {test, captureFullPage} from './inner-script.js';
-let doc = test();
+import {captureFullPage} from './inner-script.js';
 captureFullPage();
-export const getDoc = () => {
-    return doc;
-};
