@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../../components/basis";
 import { Spinner } from "../../components/molecules"
-import { TransferPageTemplate } from "../../components/template"
+import { TransferPageTemplate, DetectPageTemplate } from "../../components/template"
 function Main() {
   const [mainState, setMainState] = useState("default");
   const [spinnerConfig, setSpinnerConfig] = useState({
@@ -32,6 +32,7 @@ function Main() {
 
   const checkRenderTemplate = () => {
     if(mainState==="transfer") return (<TransferPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState}/>);
+    if(mainState==="detect") return (<DetectPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState}/>);
     else if(mainState==="progress") return (<Spinner title={spinnerConfig.text} time={spinnerConfig.time}/>);
     else if(mainState==="default") return(
       <div>
@@ -43,6 +44,9 @@ function Main() {
         <button onClick={() => {
           setMainState("progress");
         }}>set progress</button>
+        <button onClick={() => {
+         setMainState("detect");
+        }}>set detect</button>
       </div>
     )
   }
