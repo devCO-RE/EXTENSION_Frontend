@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Header } from "../../components/basis";
 import {TransferPageTemplate} from "../../components/template"
 function Main() {
+  const [mainState, setMainState] = useState("default");
   function doStuffWithDom(domContent) {
     const domTemplate = document.createElement("div"); // body에 추가할 span 태그를 추가
     domTemplate.innerHTML = domContent; // innerHTML을 사용하여 text를 html로 파싱 후 자식노드로 추가
@@ -22,13 +23,30 @@ function Main() {
   const testAPI  = async () => {
     fetch("http://115.85.182.11:8080/user/123").then((response) => response.json())
     .then((data) => console.log(data));
-}
+  }
+
+  const checkRenderTemplate = () => {
+    if(mainState==="transfer") return (<TransferPageTemplate/>);
+    else if(mainState==="progress") console.log("foo");
+    else if(mainState==="default") return(
+      <div>
+        <button onClick={testGetDoc}>pdf test</button>
+        <button onClick={testAPI}>api test</button>
+        <button onClick={()=> {
+          setMainState("transfer");
+        }}>set transfer</button>
+        <button onClick={() => {
+          setMainState("progress");
+        }}>set progress</button>
+      </div>
+    )
+  }
+
   return (
     <div>
       <Header />
-      <TransferPageTemplate />
-      <button onClick={testGetDoc}>pdf test</button>
-      <button onClick={testAPI}>api test</button>
+      {checkRenderTemplate()}
+      
     </div>
   );
 }

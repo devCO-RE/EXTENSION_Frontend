@@ -14,12 +14,17 @@ import {
 import PersonIcon from "@material-ui/icons/Person";
 import AddIcon from "@material-ui/icons/Add";
 import { blue } from "@material-ui/core/colors";
+import { classicNameResolver } from "typescript";
 
 const emails = ["username@gmail.com", "user02@gmail.com"];
 const useStyles = makeStyles({
+  root: { marginTop: 120 },
   avatar: {
     backgroundColor: blue[100],
     color: blue[600],
+  },
+  transferbtn: {
+    marginTop: 50,
   },
 });
 
@@ -43,7 +48,7 @@ function SimpleDialog(props: SimpleDialogProps) {
 
   return (
     <Dialog onClose={handleClose} aria-labelledby="simple-dialog-title" open={open}>
-      <DialogTitle id="simple-dialog-title">Set backup account</DialogTitle>
+      <DialogTitle id="simple-dialog-title">전송할 사람을 선택해주세요!</DialogTitle>
       <List>
         {emails.map((email) => (
           <ListItem button onClick={() => handleListItemClick(email)} key={email}>
@@ -68,6 +73,7 @@ function SimpleDialog(props: SimpleDialogProps) {
   );
 }
 function TransferPageTemplate() {
+  const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(emails[1]);
 
@@ -81,13 +87,17 @@ function TransferPageTemplate() {
   };
 
   return (
-    <div>
-      <Typography variant="subtitle1">Selected: {selectedValue}</Typography>
+    <div className={classes.root}>
+      <Typography variant="subtitle1">선택된 사람: {selectedValue}</Typography>
       <br />
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        Open simple dialog
+        자료 받을 사람 선택
       </Button>
       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
+      <br />
+      <Button className={classes.transferbtn} variant="contained" color="primary">
+        전송
+      </Button>
     </div>
   );
 }
