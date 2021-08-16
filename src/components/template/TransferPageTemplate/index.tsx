@@ -16,9 +16,9 @@ import AddIcon from "@material-ui/icons/Add";
 import { blue } from "@material-ui/core/colors";
 import { classicNameResolver } from "typescript";
 
-const emails = ["username@gmail.com", "user02@gmail.com"];
+const emails = ["test@gmail.com", "user02@gmail.com", "soo@naver.com"];
 const useStyles = makeStyles({
-  root: { marginTop: 120 },
+  root: { marginTop: 80 },
   avatar: {
     backgroundColor: blue[100],
     color: blue[600],
@@ -72,10 +72,21 @@ function SimpleDialog(props: SimpleDialogProps) {
     </Dialog>
   );
 }
-function TransferPageTemplate() {
+interface SpinnerConfig {
+  text: string;
+  time: number;
+}
+interface TransferPageProps {
+  setSpinnerConfig: React.Dispatch<React.SetStateAction<SpinnerConfig>>;
+  setMainState: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function TransferPageTemplate({ setSpinnerConfig, setMainState }: TransferPageProps) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState(emails[1]);
+  const [selectedValue, setSelectedValue] = React.useState(
+    "파일 변환이 완료 되었습니다!"
+  );
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -84,6 +95,11 @@ function TransferPageTemplate() {
   const handleClose = (value: string) => {
     setOpen(false);
     setSelectedValue(value);
+  };
+
+  const handleClickTransfer = () => {
+    setSpinnerConfig({ text: selectedValue + "님께 전송중...", time: 3 });
+    setMainState("progress");
   };
 
   return (
@@ -95,7 +111,12 @@ function TransferPageTemplate() {
       </Button>
       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
       <br />
-      <Button className={classes.transferbtn} variant="contained" color="primary">
+      <Button
+        className={classes.transferbtn}
+        variant="contained"
+        color="primary"
+        onClick={handleClickTransfer}
+      >
         전송
       </Button>
     </div>

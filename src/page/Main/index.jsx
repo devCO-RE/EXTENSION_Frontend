@@ -5,6 +5,10 @@ import { Spinner } from "../../components/molecules"
 import { TransferPageTemplate } from "../../components/template"
 function Main() {
   const [mainState, setMainState] = useState("default");
+  const [spinnerConfig, setSpinnerConfig] = useState({
+    text: "파일을 생성 중 입니다...",
+    time: 7
+  });
   function doStuffWithDom(domContent) {
     const domTemplate = document.createElement("div"); // body에 추가할 span 태그를 추가
     domTemplate.innerHTML = domContent; // innerHTML을 사용하여 text를 html로 파싱 후 자식노드로 추가
@@ -27,8 +31,8 @@ function Main() {
   }
 
   const checkRenderTemplate = () => {
-    if(mainState==="transfer") return (<TransferPageTemplate/>);
-    else if(mainState==="progress") return (<Spinner title={"파일을 생성 중 입니다..."}/>);
+    if(mainState==="transfer") return (<TransferPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState}/>);
+    else if(mainState==="progress") return (<Spinner title={spinnerConfig.text} time={spinnerConfig.time}/>);
     else if(mainState==="default") return(
       <div>
         <button onClick={testGetDoc}>pdf test</button>
