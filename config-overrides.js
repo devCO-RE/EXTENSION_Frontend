@@ -22,7 +22,12 @@ const {
     patterns: [
     { from: 'public', to: '' },
     { from: 'src/background.js', to: '' },
-    { from: 'src/content.js', to: '' }
+    { from: 'src/content.js', to: '' },
+    { from: 'src/inner-script.js', to: '' },
+    { from: 'src/main.js', to: '' },
+    { from: 'src/modules/html2canvas.js', to: 'modules' },
+    { from: 'src/modules/jspdf.min.js', to: 'modules' },
+
     ]
     })
     module.exports = {
