@@ -63,7 +63,7 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     userButton: {
       position: "absolute",
-      right: 30,
+      right: 10,
       // float: "right",
     },
     userIcon: { paddingLeft: 10 },
@@ -90,9 +90,7 @@ function Header() {
     <div className={classes.root}>
       <AppBar className={classes.bar} position="static">
         <Toolbar className={classes.bar}>
-          <Typography variant="h6" className={classes.title}>
-            Header
-          </Typography>
+          <Typography variant="h6">Collect & Report</Typography>
           <Button className={classes.userButton} color="inherit" onClick={handleClick}>
             {getUserInfo()} 님
             <AccountCircleIcon className={classes.userIcon} fontSize="large" />
