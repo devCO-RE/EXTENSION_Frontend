@@ -1,4 +1,4 @@
-let userInfo = '박영인' as string;
+let userInfo = 'dbwj2836@naver.com' as string;
 
 export const getUserInfo = () => {
  return userInfo;

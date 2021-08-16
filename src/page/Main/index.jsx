@@ -1,7 +1,14 @@
 /*global chrome*/
 import React, { useState, useEffect } from "react";
 import { Header } from "../../components/basis";
+import { Spinner } from "../../components/molecules"
+import { TransferPageTemplate } from "../../components/template"
 function Main() {
+  const [mainState, setMainState] = useState("default");
+  const [spinnerConfig, setSpinnerConfig] = useState({
+    text: "파일을 생성 중 입니다...",
+    time: 7
+  });
   function doStuffWithDom(domContent) {
     const domTemplate = document.createElement("div"); // body에 추가할 span 태그를 추가
     domTemplate.innerHTML = domContent; // innerHTML을 사용하여 text를 html로 파싱 후 자식노드로 추가
@@ -18,11 +25,33 @@ function Main() {
       chrome.tabs.sendMessage(tab.id, { text: "report_back" }, doStuffWithDom);
     });
   };
+  const testAPI  = async () => {
+    fetch("http://115.85.182.11:8080/user/123").then((response) => response.json())
+    .then((data) => console.log(data));
+  }
+
+  const checkRenderTemplate = () => {
+    if(mainState==="transfer") return (<TransferPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState}/>);
+    else if(mainState==="progress") return (<Spinner title={spinnerConfig.text} time={spinnerConfig.time}/>);
+    else if(mainState==="default") return(
+      <div>
+        <button onClick={testGetDoc}>pdf test</button>
+        <button onClick={testAPI}>api test</button>
+        <button onClick={()=> {
+          setMainState("transfer");
+        }}>set transfer</button>
+        <button onClick={() => {
+          setMainState("progress");
+        }}>set progress</button>
+      </div>
+    )
+  }
+
   return (
     <div>
       <Header />
-      Main page
-      <button onClick={testGetDoc}>test</button>
+      {checkRenderTemplate()}
+      
     </div>
   );
 }
