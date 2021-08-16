@@ -1,6 +1,7 @@
 /*global chrome*/
 import React, { useState, useEffect } from "react";
 import { Header } from "../../components/basis";
+import {TransferPageTemplate} from "../../components/template"
 function Main() {
   function doStuffWithDom(domContent) {
     const domTemplate = document.createElement("div"); // body에 추가할 span 태그를 추가
@@ -18,11 +19,16 @@ function Main() {
       chrome.tabs.sendMessage(tab.id, { text: "report_back" }, doStuffWithDom);
     });
   };
+  const testAPI  = async () => {
+    fetch("http://115.85.182.11:8080/user/123").then((response) => response.json())
+    .then((data) => console.log(data));
+}
   return (
     <div>
       <Header />
-      Main page
-      <button onClick={testGetDoc}>test</button>
+      <TransferPageTemplate />
+      <button onClick={testGetDoc}>pdf test</button>
+      <button onClick={testAPI}>api test</button>
     </div>
   );
 }
