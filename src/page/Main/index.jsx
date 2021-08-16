@@ -1,7 +1,8 @@
 /*global chrome*/
 import React, { useState, useEffect } from "react";
 import { Header } from "../../components/basis";
-import {TransferPageTemplate} from "../../components/template"
+import { Spinner } from "../../components/molecules"
+import { TransferPageTemplate } from "../../components/template"
 function Main() {
   const [mainState, setMainState] = useState("default");
   function doStuffWithDom(domContent) {
@@ -27,7 +28,7 @@ function Main() {
 
   const checkRenderTemplate = () => {
     if(mainState==="transfer") return (<TransferPageTemplate/>);
-    else if(mainState==="progress") console.log("foo");
+    else if(mainState==="progress") return (<Spinner title={"파일을 생성 중 입니다..."}/>);
     else if(mainState==="default") return(
       <div>
         <button onClick={testGetDoc}>pdf test</button>
