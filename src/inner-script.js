@@ -3,7 +3,7 @@ import './modules/jspdf.min.js';
 
 /* eslint-disable no-undef */
 export const captureFullPage = () => {
-alert("capture start")
+alert("캡쳐를 시작합니다. 잠시만 기다려 주세요!")
   html2canvas(document.getElementsByTagName('body')[0]).then((canvas) => {
 
     let imgData = canvas.toDataURL('image/png'); 
@@ -23,7 +23,7 @@ alert("capture start")
         doc.addPage(); 
         heightLeft -= pageHeight; 
     } // 파일 저장 
-    doc.save('sample.pdf');
+    doc.save('capture.pdf');
 
   });
 };
