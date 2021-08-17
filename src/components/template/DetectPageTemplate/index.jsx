@@ -13,7 +13,7 @@ const useStyles = makeStyles({
 });
 
 
-function DetectPageTemplate({ setSpinnerConfig, setMainState }) {
+function DetectPageTemplate({ setSpinnerConfig, setMainState, isBadWord }) {
   const classes = useStyles();
   function doStuffWithDom(domContent) {
     console.log("I received the following DOM content:\n" + domContent);
@@ -31,7 +31,9 @@ function DetectPageTemplate({ setSpinnerConfig, setMainState }) {
   };
   return (
     <div className={classes.root}>
-      <Typography variant="subtitle1">악플이 감지되었습니다!!</Typography>
+      {isBadWord? 
+      (<div>
+        <Typography variant="subtitle1">악플이 감지되었습니다!!</Typography>
       <br />
       <Typography variant="subtitle1">악플 내역을 파일로 변환 후 전송하시겠습니까?</Typography>
       <br />
@@ -43,6 +45,8 @@ function DetectPageTemplate({ setSpinnerConfig, setMainState }) {
       >
         악플 내용을 파일로 변환하기
       </Button>
+      </div>): 
+      (<Typography variant="subtitle1">악플이 감지되지 않았습니다 :)</Typography>)}
     </div>
   );
 }
