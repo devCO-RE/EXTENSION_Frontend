@@ -34,6 +34,7 @@ function Main() {
     if(mainState==="transfer") return (<TransferPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState}/>);
     if(mainState==="detect") return (<DetectPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState}/>);
     else if(mainState==="progress") return (<Spinner title={spinnerConfig.text} time={spinnerConfig.time}/>);
+    else if(mainState==="progress_detect") return (<Spinner title={"악플을 탐지중 입니다..."} time={10}/>);
     else if(mainState==="default") return(
       <div>
         <button onClick={testGetDoc}>pdf test</button>
@@ -47,6 +48,9 @@ function Main() {
         <button onClick={() => {
          setMainState("detect");
         }}>set detect</button>
+         <button onClick={() => {
+         setMainState("progress_detect");
+        }}>set progress detect</button>
       </div>
     )
   }

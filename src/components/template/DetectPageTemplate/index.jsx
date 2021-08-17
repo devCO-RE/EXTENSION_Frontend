@@ -16,11 +16,7 @@ const useStyles = makeStyles({
 function DetectPageTemplate({ setSpinnerConfig, setMainState }) {
   const classes = useStyles();
   function doStuffWithDom(domContent) {
-    const domTemplate = document.createElement("div"); // body에 추가할 span 태그를 추가
-    domTemplate.innerHTML = domContent; // innerHTML을 사용하여 text를 html로 파싱 후 자식노드로 추가
-
-    document.body.append(domTemplate);
-    console.log("I received the following DOM content:\n" + domTemplate);
+    console.log("I received the following DOM content:\n" + domContent);
   }
   /* eslint-disable no-undef */
   const requestPdf = async () => {
@@ -30,6 +26,8 @@ function DetectPageTemplate({ setSpinnerConfig, setMainState }) {
       var tab = tabs[0];
       chrome.tabs.sendMessage(tab.id, { text: "report_back" }, doStuffWithDom);
     });
+    setMainState("progress");
+    setSpinnerConfig({text: "파일 변환 중 입니다...", time: 20});
   };
   return (
     <div className={classes.root}>
