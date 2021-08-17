@@ -1,2 +1,2 @@
-const foo = 'dummy';
-export default foo;
+export { default as TransferPageTemplate } from './TransferPageTemplate';
+export { default as DetectPageTemplate } from './DetectPageTemplate';

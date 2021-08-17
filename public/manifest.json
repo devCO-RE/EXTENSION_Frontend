@@ -7,10 +7,27 @@
   "icons": {
     "192": "logo192.png"
   },
+  "permissions": ["activeTab", "tabs"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "main.js",
+    "inner-script.js",
+    "modules/jspdf.min.js",
+    "modules/html2canvas.js"
+  ],
+
   "browser_action": {
     "default_icon": "logo192.png",
     "default_title": "Core-Chrome-Extension",
     "default_popup": "index.html"
-  },
-  "content_security_policy": "script-src 'self' 'sha256-Wv5m/Q3miHO+JXo/oDjuOJbLfI9bUywVwgsiA5rKx/c='; object-src 'self'"
+  }
 }

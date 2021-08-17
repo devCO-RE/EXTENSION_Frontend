@@ -1,1 +1,1 @@
-export { getLoginInfo, setLoginInfo } from './shared';
+export { getUserInfo, setUserInfo } from './shared';

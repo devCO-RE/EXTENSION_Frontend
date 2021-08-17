@@ -1,8 +1,8 @@
-let loginInfo = '' as string;
+let userInfo = 'dbwj2836@naver.com' as string;
 
-export const getLoginInfo = () => {
- return loginInfo;
+export const getUserInfo = () => {
+ return userInfo;
 }
-export const setLoginInfo = (value: string) => {
-    loginInfo = value;
+export const setUserInfo = (value: string) => {
+    userInfo = value;
 }
