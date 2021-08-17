@@ -1,14 +1,13 @@
 # Getting Started with Create React App
 
-## 실행 방법
+## 실행 방법 (현재 악플 탐색 서버와 연결에 문제가 있어 제대로 작동하지 않을 수 있습니다..)
 1. yarn install
 2. yarn build
 3. chrome://extensions/ 접속 -> 개발자 모드 켜기
 4. 해당 프로젝트의 build 폴더를 업로드
 5. 브라우저 탭에서 실행
 
----
-### 현재 악플 탐색 서버와 연결에 문제가 있어 제대로 작동하지 않을 수 있습니다..
+
 ---
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
