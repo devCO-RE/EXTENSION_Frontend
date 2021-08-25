@@ -14,8 +14,9 @@ import {
 import PersonIcon from "@material-ui/icons/Person";
 import AddIcon from "@material-ui/icons/Add";
 import { blue } from "@material-ui/core/colors";
+import { FileUploader } from "../../molecules";
 
-const emails = ["test@gmail.com", "user02@gmail.com", "soo@naver.com"];
+const emails = [{id: 1, email: "parkb@gmail.com"}, {id: 2, email:"user02@gmail.com"}, {id: 3, email:"soo@naver.com"}];
 const useStyles = makeStyles({
   root: { marginTop: 80 },
   avatar: {
@@ -44,13 +45,13 @@ function SimpleDialog(props) {
       <DialogTitle id="simple-dialog-title">전송할 사람을 선택해주세요!</DialogTitle>
       <List>
         {emails.map((email) => (
-          <ListItem button onClick={() => handleListItemClick(email)} key={email}>
+          <ListItem button onClick={() => handleListItemClick(email)} key={email.email}>
             <ListItemAvatar>
               <Avatar className={classes.avatar}>
                 <PersonIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={email} />
+            <ListItemText primary={email.email} />
           </ListItem>
         ))}
         <ListItem autoFocus button onClick={() => handleListItemClick("addAccount")}>
@@ -67,10 +68,12 @@ function SimpleDialog(props) {
 }
 
 
-function TransferPageTemplate({ setSpinnerConfig, setMainState }) {
+function TransferPageTemplate({ setSpinnerConfig, setMainState, curUrl }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [badWordFile, setBadWordFile] = useState(null);
   const [selectedValue, setSelectedValue] = React.useState("");
+  const [selectedId, setSelectedId] = React.useState(0);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -78,20 +81,22 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }) {
 
   const handleClose = (value) => {
     setOpen(false);
-    setSelectedValue(value);
+    setSelectedValue(value.email);
+    setSelectedId(value.id);
   };
 
   const handleClickTransfer = () => {
+    transferFile();
+   
+  };
+  const transferFile = async () => {
+    const formData = new FormData();
+    formData.append('file', badWordFile)
+    formData.append('webUrl', curUrl)
     setSpinnerConfig({ text: selectedValue + "님께 전송중...", time: 3, isOpen: true });
-    fetch("http://115.85.182.11:8080/material", {
+    fetch(`http://115.85.182.11:8080/material?userid=${selectedId}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user: selectedValue,
-        file: "",
-      }),
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -101,26 +106,32 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }) {
           isOpen: false,
         });
         console.log(data);
+        alert("전송완료! 메인페이지로 돌아갑니다.")
       });
     /* eslint-disable no-undef */
-    chrome.storage.local.set({ hasFile: "hasFile" }, function () {
-      console.log("Value is set to " + "hasFile");
+    chrome.storage.local.set({ hasFile: "" }, function () {
+      console.log("Value is set to " + "none");
     });
-  };
+  }
 
   return (
     <div className={classes.root}>
       <Typography variant="subtitle1">
-        {selectedValue === "" ? (
+        {selectedValue=== "" ? (
           <>파일 변환이 완료 되었습니다!</>
         ) : (
           <>선택된 사람: {selectedValue}</>
         )}
       </Typography>
       <br />
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        자료 받을 사람 선택
-      </Button>
+      <div style={{ display: 'flex', alignItems: 'center', margin: '0 160px' }}>
+        <div style={{ flex: '1', float: 'left' }}>
+        <Button  variant="outlined" color="primary" onClick={handleClickOpen}>
+          자료 받을 사람 선택
+        </Button>
+        </div>
+        <FileUploader style={{ flex: '1', float: 'right' }} setFile={setBadWordFile} />
+      </div>
       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
       <br />
       <Button
