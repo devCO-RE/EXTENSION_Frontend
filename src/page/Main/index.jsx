@@ -6,7 +6,7 @@ import { TransferPageTemplate, DetectPageTemplate } from "../../components/templ
 
 
 function Main() {
-  const [mainState, setMainState] = useState("detect");
+  const [mainState, setMainState] = useState("transfer");
   const [isBadWord, setIsBadWord] = useState(true);
   const [spinnerConfig, setSpinnerConfig] = useState({
     text: "파일을 생성 중 입니다...",

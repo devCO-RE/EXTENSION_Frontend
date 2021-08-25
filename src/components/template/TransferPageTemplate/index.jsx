@@ -16,7 +16,7 @@ import AddIcon from "@material-ui/icons/Add";
 import { blue } from "@material-ui/core/colors";
 import { FileUploader } from "../../molecules";
 
-const emails = ["test@gmail.com", "user02@gmail.com", "soo@naver.com"];
+const emails = [{id: 1, email: "parkß@gmail.com"}, {id: 2, email:"user02@gmail.com"}, {id: 3, email:"soo@naver.com"}];
 const useStyles = makeStyles({
   root: { marginTop: 80 },
   avatar: {
@@ -72,7 +72,7 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [badWordFile, setBadWordFile] = useState(null);
-  const [selectedValue, setSelectedValue] = React.useState("");
+  const [selectedValue, setSelectedValue] = React.useState({id: 0, email: ""});
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -84,20 +84,21 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }) {
   };
 
   const handleClickTransfer = () => {
+    let params = {
+      webUrl: "https://test.com",
+      file: badWordFile
+    };
+    transferFile(params);
+   
+  };
+  const transferFile = async (params) => {
     const formData = new FormData();
-    // Object.keys(params).map((key) => {
-    //   formData.append(key, params[key]);
-    // });
-    setSpinnerConfig({ text: selectedValue + "님께 전송중...", time: 3, isOpen: true });
-    fetch("http://115.85.182.11:8080/material", {
+    formData.append('file', badWordFile)
+    formData.append('webUrl', 'http://test.com')
+    setSpinnerConfig({ text: selectedValue.email + "님께 전송중...", time: 3, isOpen: true });
+    fetch(`http://115.85.182.11:8080/material?userId=${selectedValue.id}`, {
       method: "POST",
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: JSON.stringify({
-        // user: selectedValue,
-        file: "",
-      }),
+      body: formData,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -107,29 +108,31 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }) {
           isOpen: false,
         });
         console.log(data);
+        alert("전송완료! 메인페이지로 돌아갑니다.")
       });
     /* eslint-disable no-undef */
-    chrome.storage.local.set({ hasFile: "hasFile" }, function () {
-      console.log("Value is set to " + "hasFile");
+    chrome.storage.local.set({ hasFile: "" }, function () {
+      console.log("Value is set to " + "none");
     });
-  };
+  }
 
   return (
     <div className={classes.root}>
       <Typography variant="subtitle1">
-        {selectedValue === "" ? (
+        {selectedValue.email=== "" ? (
           <>파일 변환이 완료 되었습니다!</>
         ) : (
           <>선택된 사람: {selectedValue}</>
         )}
       </Typography>
       <br />
-      <Button variant="outlined" color="primary" onClick={handleClickOpen}>
-        자료 받을 사람 선택
-      </Button>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Button  variant="outlined" color="primary" onClick={handleClickOpen}>
+          자료 받을 사람 선택
+        </Button>
+        <FileUploader  setFile={setBadWordFile} />
+      </div>
       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
-
-      <FileUploader setFile={setBadWordFile} />
       <br />
       <Button
         className={classes.transferbtn}
