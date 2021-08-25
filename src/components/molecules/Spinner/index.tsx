@@ -17,20 +17,24 @@ const useStyles = makeStyles((theme: Theme) =>
 interface SpinnerProps {
   title: string;
   time: number;
+  isOpen: boolean;
 }
-function Spinner({ title, time }: SpinnerProps) {
+function Spinner({ title, time, isOpen }: SpinnerProps) {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(isOpen);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     closeSpinner();
+  //   }, time * 1000);
+  // }, []);
   useEffect(() => {
-    setTimeout(() => {
-      closeSpinner();
-    }, time * 1000);
-  }, []);
+    setOpen(isOpen);
+  }, [isOpen]);
   const closeSpinner = () => {
     setOpen(false);
   };
   return (
-    <Backdrop className={classes.backdrop} open={open}>
+    <Backdrop className={classes.backdrop} open={open} onClick={closeSpinner}>
       <Typography variant="h6" className={classes.title}>
         {title}
       </Typography>
