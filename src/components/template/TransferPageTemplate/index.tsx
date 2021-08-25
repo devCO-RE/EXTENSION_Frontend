@@ -14,6 +14,7 @@ import {
 import PersonIcon from "@material-ui/icons/Person";
 import AddIcon from "@material-ui/icons/Add";
 import { blue } from "@material-ui/core/colors";
+import { FileUploader } from "../../molecules";
 
 const emails = ["test@gmail.com", "user02@gmail.com", "soo@naver.com"];
 const useStyles = makeStyles({
@@ -83,6 +84,7 @@ interface TransferPageProps {
 function TransferPageTemplate({ setSpinnerConfig, setMainState }: TransferPageProps) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const [badWordFile, setBadWordFile] = useState(null as File | null);
   const [selectedValue, setSelectedValue] = React.useState(
     "파일 변환이 완료 되었습니다!"
   );
@@ -126,6 +128,8 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }: TransferPagePr
         자료 받을 사람 선택
       </Button>
       <SimpleDialog selectedValue={selectedValue} open={open} onClose={handleClose} />
+
+      <FileUploader setFile={setBadWordFile} />
       <br />
       <Button
         className={classes.transferbtn}
