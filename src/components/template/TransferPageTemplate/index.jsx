@@ -27,13 +27,7 @@ const useStyles = makeStyles({
   },
 });
 
-export interface SimpleDialogProps {
-  open: boolean;
-  selectedValue: string;
-  onClose: (value: string) => void;
-}
-
-function SimpleDialog(props: SimpleDialogProps) {
+function SimpleDialog(props) {
   const classes = useStyles();
   const { onClose, selectedValue, open } = props;
 
@@ -41,7 +35,7 @@ function SimpleDialog(props: SimpleDialogProps) {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = (value: string) => {
+  const handleListItemClick = (value) => {
     onClose(value);
   };
 
@@ -71,17 +65,9 @@ function SimpleDialog(props: SimpleDialogProps) {
     </Dialog>
   );
 }
-interface SpinnerConfig {
-  text: string;
-  time: number;
-  isOpen: boolean;
-}
-interface TransferPageProps {
-  setSpinnerConfig: React.Dispatch<React.SetStateAction<SpinnerConfig>>;
-  setMainState: React.Dispatch<React.SetStateAction<string>>;
-}
 
-function TransferPageTemplate({ setSpinnerConfig, setMainState }: TransferPageProps) {
+
+function TransferPageTemplate({ setSpinnerConfig, setMainState }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState("");
@@ -90,12 +76,13 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }: TransferPagePr
     setOpen(true);
   };
 
-  const handleClose = (value: string) => {
+  const handleClose = (value) => {
     setOpen(false);
     setSelectedValue(value);
   };
 
   const handleClickTransfer = () => {
+    setSpinnerConfig({ text: selectedValue + "님께 전송중...", time: 3, isOpen: true });
     fetch("http://115.85.182.11:8080/material", {
       method: "POST",
       headers: {
@@ -107,10 +94,18 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }: TransferPagePr
       }),
     })
       .then((response) => response.json())
-      .then((data) => console.log(data));
-
-    setSpinnerConfig({ text: selectedValue + "님께 전송중...", time: 3, isOpen: true });
-    setMainState("progress");
+      .then((data) => {
+        setSpinnerConfig({
+          text: "",
+          time: 3,
+          isOpen: false,
+        });
+        console.log(data);
+      });
+    /* eslint-disable no-undef */
+    chrome.storage.local.set({ hasFile: "hasFile" }, function () {
+      console.log("Value is set to " + "hasFile");
+    });
   };
 
   return (
