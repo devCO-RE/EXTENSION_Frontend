@@ -12,7 +12,7 @@ alert("캡쳐를 시작합니다. 잠시만 기다려 주세요!")
     let pageHeight = imgWidth * 1.414; // 출력 페이지 세로 길이 계산 A4 기준 
     let imgHeight = canvas.height * imgWidth / canvas.width; 
     let heightLeft = imgHeight; 
-    let doc = new jsPDF('p', 'mm'); 
+    let doc = new jsPDF('p','mm','a4',true);
     let position = margin; // 첫 페이지 출력 
     doc.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight); 
     doc.addPage(); 
@@ -23,6 +23,8 @@ alert("캡쳐를 시작합니다. 잠시만 기다려 주세요!")
         doc.addPage(); 
         heightLeft -= pageHeight; 
     } // 파일 저장 
+    var pageCount = doc.internal.getNumberOfPages();
+    doc.deletePage(pageCount);
     doc.save('capture.pdf');
 
   });
