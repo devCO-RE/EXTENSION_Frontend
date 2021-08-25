@@ -2,13 +2,11 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../../components/basis";
 import { Spinner } from "../../components/molecules"
-import { TransferPageTemplate, DetectPageTemplate } from "../../components/template"
-
-
+import { TransferPageTemplate, DetectPageTemplate, HomePageTemplate } from "../../components/template"
 function Main() {
-  const [mainState, setMainState] = useState("detect");
+  const [mainState, setMainState] = useState("home");
   const [url, setUrl] = useState("");
-  const [isBadWord, setIsBadWord] = useState(true);
+  const [isBadWord, setIsBadWord] = useState(false);
   const [spinnerConfig, setSpinnerConfig] = useState({
     text: "파일을 생성 중 입니다...",
     time: 7, 
@@ -30,6 +28,7 @@ function Main() {
   });
 
   const checkRenderTemplate = () => {
+    if(mainState==="home")  return (<HomePageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState} setIsBadWord={setIsBadWord} curUrl={url}/>);
     if(mainState==="transfer") return (<TransferPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState} curUrl={url}/>);
     if(mainState==="detect") return (<DetectPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState} isBadWord={isBadWord} curUrl={url}/>);
   }
