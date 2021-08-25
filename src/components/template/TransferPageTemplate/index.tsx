@@ -97,13 +97,17 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }: TransferPagePr
   };
 
   const handleClickTransfer = () => {
+    const formData = new FormData();
+    // Object.keys(params).map((key) => {
+    //   formData.append(key, params[key]);
+    // });
     fetch("http://115.85.182.11:8080/material", {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
       },
       body: JSON.stringify({
-        user: selectedValue,
+        // user: selectedValue,
         file: "",
       }),
     })
