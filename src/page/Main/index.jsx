@@ -14,6 +14,13 @@ function Main() {
     isOpen: false
   });
   /* eslint-disable no-undef */
+  useEffect(()=> {
+    chrome.storage.local.get(['hasFile'], function(result) {
+      console.log('Value currently is ' + result.hasFile);
+      if(result.hasFile==="hasFile") setMainState("transfer");
+    });
+  });
+  
   const detectBadWord  = async () => {
     fetch("http://115.85.182.11:8080/badword").then((response) => response.json())
     .then((data) => setIsBadWord(data));

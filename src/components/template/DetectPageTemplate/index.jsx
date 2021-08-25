@@ -29,6 +29,9 @@ function DetectPageTemplate({ setSpinnerConfig, setMainState, isBadWord }) {
       var tab = tabs[0];
       chrome.tabs.sendMessage(tab.id, { text: "report_back" }, doStuffWithDom);
     });
+    chrome.storage.local.set({hasFile: "hasFile"}, function() {
+      console.log('Value is set to ' + "hasFile");
+    });
     setMainState("transfer");
     setSpinnerConfig({text: "파일 변환 중 입니다...", time: 20, isOpen: true});
   };

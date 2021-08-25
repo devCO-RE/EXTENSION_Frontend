@@ -74,6 +74,7 @@ function SimpleDialog(props: SimpleDialogProps) {
 interface SpinnerConfig {
   text: string;
   time: number;
+  isOpen: boolean;
 }
 interface TransferPageProps {
   setSpinnerConfig: React.Dispatch<React.SetStateAction<SpinnerConfig>>;
@@ -83,9 +84,7 @@ interface TransferPageProps {
 function TransferPageTemplate({ setSpinnerConfig, setMainState }: TransferPageProps) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [selectedValue, setSelectedValue] = React.useState(
-    "파일 변환이 완료 되었습니다!"
-  );
+  const [selectedValue, setSelectedValue] = React.useState("");
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -110,13 +109,19 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }: TransferPagePr
       .then((response) => response.json())
       .then((data) => console.log(data));
 
-    setSpinnerConfig({ text: selectedValue + "님께 전송중...", time: 3 });
+    setSpinnerConfig({ text: selectedValue + "님께 전송중...", time: 3, isOpen: true });
     setMainState("progress");
   };
 
   return (
     <div className={classes.root}>
-      <Typography variant="subtitle1">선택된 사람: {selectedValue}</Typography>
+      <Typography variant="subtitle1">
+        {selectedValue === "" ? (
+          <>파일 변환이 완료 되었습니다!</>
+        ) : (
+          <>선택된 사람: {selectedValue}</>
+        )}
+      </Typography>
       <br />
       <Button variant="outlined" color="primary" onClick={handleClickOpen}>
         자료 받을 사람 선택
