@@ -28,7 +28,7 @@ function Main() {
   });
 
   const checkRenderTemplate = () => {
-    if(mainState==="home")  return (<HomePageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState} curUrl={url}/>);
+    if(mainState==="home")  return (<HomePageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState} setIsBadWord={setIsBadWord} curUrl={url}/>);
     if(mainState==="transfer") return (<TransferPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState} curUrl={url}/>);
     if(mainState==="detect") return (<DetectPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState} isBadWord={isBadWord} curUrl={url}/>);
   }

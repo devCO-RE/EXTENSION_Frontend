@@ -21,10 +21,16 @@ interface SpinnerConfig {
 interface HomePageProps {
   setSpinnerConfig: React.Dispatch<React.SetStateAction<SpinnerConfig>>;
   setMainState: React.Dispatch<React.SetStateAction<string>>;
+  setIsBadWord: React.Dispatch<React.SetStateAction<boolean>>;
   curUrl: string;
 }
 
-function HomePageTemplate({ setSpinnerConfig, setMainState, curUrl }: HomePageProps) {
+function HomePageTemplate({
+  setSpinnerConfig,
+  setMainState,
+  setIsBadWord,
+  curUrl,
+}: HomePageProps) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(
@@ -41,8 +47,26 @@ function HomePageTemplate({ setSpinnerConfig, setMainState, curUrl }: HomePagePr
   };
 
   const handleClickForDetecting = () => {
-    // setSpinnerConfig({ text: "악플을 탐지하는 중 입니다...", time: 3, isOpen: true });
-    setMainState("detect");
+    setSpinnerConfig({ text: "악플을 탐지하는 중 입니다...", time: 3, isOpen: true });
+    fetch(`http://49.50.175.233:3000`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url: curUrl }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setSpinnerConfig({
+          text: "",
+          time: 3,
+          isOpen: false,
+        });
+        console.log(data);
+        alert("탐색완료!");
+        if (data.result === 1) setIsBadWord(true);
+        setMainState("detect");
+      });
   };
 
   return (
