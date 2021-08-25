@@ -33,6 +33,9 @@ function DetectPageTemplate({ setSpinnerConfig, setMainState, isBadWord, curUrl 
     setMainState("transfer");
     setSpinnerConfig({text: "파일 변환 중 입니다...", time: 20, isOpen: true});
   };
+  const goToMain = () => {
+    setMainState("home");
+  }
   return (
     <div className={classes.root}>
       {isBadWord? 
@@ -50,7 +53,18 @@ function DetectPageTemplate({ setSpinnerConfig, setMainState, isBadWord, curUrl 
         악플 내용을 파일로 변환하기
       </Button>
       </div>): 
-      (<Typography variant="subtitle1">악플이 감지되지 않았습니다 :)</Typography>)}
+      (<div>
+        <Typography variant="subtitle1">현재 악플이 감지되지 않았습니다 :)</Typography>
+        <br />
+        <Button
+          className={classes.transferbtn}
+          variant="contained"
+          color="primary"
+          onClick={goToMain}
+        >
+          메인 페이지로 돌아가기
+        </Button>
+      </div>)}
     </div>
   );
 }

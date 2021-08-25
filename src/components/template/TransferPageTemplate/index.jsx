@@ -107,6 +107,7 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState, curUrl }) {
         });
         console.log(data);
         alert("전송완료! 메인페이지로 돌아갑니다.")
+        setMainState("home");
       });
     /* eslint-disable no-undef */
     chrome.storage.local.set({ hasFile: "" }, function () {

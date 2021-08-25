@@ -16,13 +16,15 @@ const useStyles = makeStyles({
 interface SpinnerConfig {
   text: string;
   time: number;
+  isOpen: boolean;
 }
 interface HomePageProps {
   setSpinnerConfig: React.Dispatch<React.SetStateAction<SpinnerConfig>>;
   setMainState: React.Dispatch<React.SetStateAction<string>>;
+  curUrl: string;
 }
 
-function HomePageTemplate({ setSpinnerConfig, setMainState }: HomePageProps) {
+function HomePageTemplate({ setSpinnerConfig, setMainState, curUrl }: HomePageProps) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [selectedValue, setSelectedValue] = React.useState(
@@ -39,26 +41,13 @@ function HomePageTemplate({ setSpinnerConfig, setMainState }: HomePageProps) {
   };
 
   const handleClickForDetecting = () => {
-    fetch("http://115.85.182.11:8080/material", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user: selectedValue,
-        file: "",
-      }),
-    })
-      .then((response) => response.json())
-      .then((data) => console.log(data));
-
-    setSpinnerConfig({ text: selectedValue + "님께 전송중...", time: 3 });
-    setMainState("progress");
+    // setSpinnerConfig({ text: "악플을 탐지하는 중 입니다...", time: 3, isOpen: true });
+    setMainState("detect");
   };
 
   return (
     <div className={classes.root}>
-      <Typography variant="subtitle1">아아아앙플감지이이</Typography>
+      <Typography variant="subtitle1">현재 페이지에서 악플을 감지해 볼까요?!</Typography>
       <br />
 
       <Button
