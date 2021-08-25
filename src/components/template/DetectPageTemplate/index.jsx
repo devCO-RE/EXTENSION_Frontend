@@ -22,12 +22,18 @@ function DetectPageTemplate({ setSpinnerConfig, setMainState, isBadWord }) {
   const requestPdf = async () => {
     // A function to use as callback
     let queryOptions = { active: true, currentWindow: true };
+
+    
+    
     chrome.tabs.query(queryOptions, function (tabs) {
       var tab = tabs[0];
       chrome.tabs.sendMessage(tab.id, { text: "report_back" }, doStuffWithDom);
     });
-    setMainState("progress");
-    setSpinnerConfig({text: "파일 변환 중 입니다...", time: 20});
+    chrome.storage.local.set({hasFile: "hasFile"}, function() {
+      console.log('Value is set to ' + "hasFile");
+    });
+    setMainState("transfer");
+    setSpinnerConfig({text: "파일 변환 중 입니다...", time: 20, isOpen: true});
   };
   return (
     <div className={classes.root}>
