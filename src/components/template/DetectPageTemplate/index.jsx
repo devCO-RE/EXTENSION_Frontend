@@ -13,7 +13,7 @@ const useStyles = makeStyles({
 });
 
 
-function DetectPageTemplate({ setSpinnerConfig, setMainState, isBadWord }) {
+function DetectPageTemplate({ setSpinnerConfig, setMainState, isBadWord, curUrl }) {
   const classes = useStyles();
   function doStuffWithDom(domContent) {
     console.log("I received the following DOM content:\n" + domContent);
@@ -22,8 +22,6 @@ function DetectPageTemplate({ setSpinnerConfig, setMainState, isBadWord }) {
   const requestPdf = async () => {
     // A function to use as callback
     let queryOptions = { active: true, currentWindow: true };
-
-    
     
     chrome.tabs.query(queryOptions, function (tabs) {
       var tab = tabs[0];

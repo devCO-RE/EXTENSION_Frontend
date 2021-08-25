@@ -68,7 +68,7 @@ function SimpleDialog(props) {
 }
 
 
-function TransferPageTemplate({ setSpinnerConfig, setMainState }) {
+function TransferPageTemplate({ setSpinnerConfig, setMainState, curUrl }) {
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
   const [badWordFile, setBadWordFile] = useState(null);
@@ -86,19 +86,15 @@ function TransferPageTemplate({ setSpinnerConfig, setMainState }) {
   };
 
   const handleClickTransfer = () => {
-    let params = {
-      webUrl: "https://test.com",
-      file: badWordFile
-    };
-    transferFile(params);
+    transferFile();
    
   };
-  const transferFile = async (params) => {
+  const transferFile = async () => {
     const formData = new FormData();
     formData.append('file', badWordFile)
-    formData.append('webUrl', 'http://test.com')
+    formData.append('webUrl', curUrl)
     setSpinnerConfig({ text: selectedValue + "님께 전송중...", time: 3, isOpen: true });
-    fetch(`http://115.85.182.11:8080/material?userId=${selectedId}`, {
+    fetch(`http://115.85.182.11:8080/material?userid=${selectedId}`, {
       method: "POST",
       body: formData,
     })
