@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Header } from "../../components/basis";
 import { Spinner } from "../../components/molecules"
-import { TransferPageTemplate, DetectPageTemplate } from "../../components/template"
+import { TransferPageTemplate, DetectPageTemplate, HomePageTemplate } from "../../components/template"
 function Main() {
   const [mainState, setMainState] = useState("detect");
   const [isBadWord, setIsBadWord] = useState(false);
@@ -17,6 +17,7 @@ function Main() {
   }
 
   const checkRenderTemplate = () => {
+    if(mainState==="home")  return (<HomePageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState}/>);
     if(mainState==="transfer") return (<TransferPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState}/>);
     if(mainState==="detect") return (<DetectPageTemplate setSpinnerConfig={setSpinnerConfig} setMainState={setMainState} isBadWord={isBadWord}/>);
     else if(mainState==="progress") return (<Spinner title={spinnerConfig.text} time={spinnerConfig.time}/>);
